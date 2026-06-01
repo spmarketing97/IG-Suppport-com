@@ -1,0 +1,132 @@
+/* =============================================
+   ESTILOS BASE — Reset y layout global
+   ============================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Iconos SVG genéricos — reemplazar por librería externa si se desea */
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.icon--sm {
+  width: 12px;
+  height: 12px;
+}
+
+.icon--filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* =============================================
+   CONTENEDOR APP — Mobile-first, centrado en desktop
+   ============================================= */
+
+.app {
+  position: relative;
+  max-width: var(--app-max-width);
+  min-height: 100dvh;
+  margin: 0 auto;
+  background-color: var(--bg-primary);
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+}
+
+.main-content {
+  padding-top: var(--navbar-height);
+  padding-bottom: calc(var(--bottom-nav-height) + 8px);
+}
+
+/* Scrollbar sutil para stories */
+.stories__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.stories__scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animación de like (doble tap) */
+@keyframes like-pop {
+  0% { transform: scale(0); opacity: 0; }
+  15% { transform: scale(1.2); opacity: 1; }
+  30% { transform: scale(0.95); }
+  45%, 80% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.like-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  z-index: 10;
+  animation: like-pop 1s ease forwards;
+}
+
+.like-animation svg {
+  width: 80px;
+  height: 80px;
+  fill: #fff;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Responsive: pantallas más anchas */
+@media (min-width: 431px) {
+  body {
+    background-color: #fafafa;
+  }
+
+  [data-theme="dark"] body {
+    background-color: #000;
+  }
+}

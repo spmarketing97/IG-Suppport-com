@@ -1,0 +1,70 @@
+/* =============================================
+   VARIABLES CSS — Paleta oficial de Instagram
+   Modificar aquí todos los colores del tema
+   ============================================= */
+
+:root {
+  /* Marca e Identidad (Gradiente del Logo) */
+  --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+
+  /* Modo Claro */
+  --bg-light: #ffffff;
+  --text-light: #000000;
+  --text-secondary-light: #737373;
+  --border-light: #dbdbdb;
+  --accent-blue: #0095f6;
+  --accent-blue-hover: #1877f2;
+  --bg-stories-active: #c13584;
+
+  /* Modo Oscuro */
+  --bg-dark: #000000;
+  --bg-surface-dark: #121212;
+  --text-dark: #f5f5f5;
+  --text-secondary-dark: #a8a8a8;
+  --border-dark: #262626;
+
+  /* =============================================
+     FUENTES — Cambiar tipografías aquí
+     ============================================= */
+  --font-logo: 'Grand Hotel', cursive;
+  --font-body: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* =============================================
+     TAMAÑOS Y ESPACIADO — Layout móvil
+     ============================================= */
+  --navbar-height: 44px;
+  --bottom-nav-height: 49px;
+  --app-max-width: 430px;
+  --story-size: 66px;
+  --avatar-sm: 32px;
+  --avatar-md: 42px;
+
+  /* =============================================
+     TEMA ACTIVO (por defecto: claro)
+     Estas variables se usan en todo el CSS
+     ============================================= */
+  --bg-primary: var(--bg-light);
+  --bg-surface: var(--bg-light);
+  --text-primary: var(--text-light);
+  --text-secondary: var(--text-secondary-light);
+  --border-color: var(--border-light);
+  --icon-color: var(--text-light);
+  --like-color: #ed4956;
+  --story-ring-seen: #dbdbdb;
+}
+
+/* Modo oscuro — activado con data-theme="dark" en <html> */
+[data-theme="dark"] {
+  --bg-primary: var(--bg-dark);
+  --bg-surface: var(--bg-surface-dark);
+  --text-primary: var(--text-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --border-color: var(--border-dark);
+  --icon-color: var(--text-dark);
+  --story-ring-seen: #555555;
+}
+
+[data-theme="dark"] .navbar,
+[data-theme="dark"] .bottom-nav {
+  background-color: var(--bg-dark);
+}

@@ -1,0 +1,438 @@
+/* =============================================
+   COMPONENTES — Navbar, Stories, Feed, Bottom Nav
+   ============================================= */
+
+/* ─── 1. NAVBAR SUPERIOR ─── */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+/* LOGO — Imagen desde la raíz (LOGO.png) */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Wordmark de texto (alternativa si no hay imagen) */
+.navbar__logo-text {
+  font-family: var(--font-logo);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--icon-color);
+  transition: opacity 0.15s;
+}
+
+.navbar__icon-btn:active {
+  opacity: 0.6;
+}
+
+/* ─── 2. STORIES ─── */
+
+.stories {
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 0 10px;
+  background-color: var(--bg-primary);
+}
+
+.stories__scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 16px;
+  scroll-snap-type: x proximity;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  width: var(--story-size);
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+
+/* Anillo con gradiente oficial (historia no vista) */
+.story__ring {
+  width: calc(var(--story-size) - 4px);
+  height: calc(var(--story-size) - 4px);
+  border-radius: 50%;
+  padding: 2.5px;
+  background: var(--insta-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story__ring--seen {
+  background: var(--story-ring-seen);
+}
+
+.story__ring--own {
+  background: transparent;
+  border: 1.5px dashed var(--text-secondary);
+  padding: 0;
+}
+
+.story__avatar-wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2.5px solid var(--bg-primary);
+  background-color: var(--bg-primary);
+  position: relative;
+}
+
+.story__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story__add-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent-blue);
+  border: 2px solid var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.story__username {
+  font-size: 11px;
+  color: var(--text-primary);
+  max-width: var(--story-size);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ─── 3. FEED — Tarjetas de publicaciones ─── */
+
+.feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+}
+
+/* Cabecera del post */
+.post__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 4px;
+}
+
+.post__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post__avatar-link {
+  display: block;
+  width: var(--avatar-md);
+  height: var(--avatar-md);
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.post__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post__user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.post__username {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.post__location {
+  font-size: 11px;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.post__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--icon-color);
+}
+
+/* Imagen principal */
+.post__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #efefef;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+[data-theme="dark"] .post__media {
+  background-color: #1a1a1a;
+}
+
+.post__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Indicadores de carrusel */
+.post__carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.post__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.post__dot--active {
+  background-color: var(--accent-blue);
+}
+
+/* Botones de interacción */
+.post__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 4px;
+}
+
+.post__actions-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.post__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--icon-color);
+  transition: transform 0.1s;
+}
+
+.post__action-btn:active {
+  transform: scale(0.9);
+}
+
+.post__action-btn--liked svg {
+  fill: var(--like-color);
+  stroke: var(--like-color);
+}
+
+.post__action-btn--saved svg {
+  fill: var(--icon-color);
+  stroke: var(--icon-color);
+}
+
+/* Contador de likes y caption */
+.post__body {
+  padding: 0 12px 12px;
+}
+
+.post__likes {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.post__caption {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.post__caption-username {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.post__view-comments {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.post__timestamp {
+  font-size: 10px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  margin-top: 4px;
+}
+
+/* Campo de comentario */
+.post__comment-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.post__comment-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.post__comment-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.post__comment-submit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-blue);
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.post__comment-submit--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.post__comment-submit--active:hover {
+  color: var(--accent-blue-hover);
+}
+
+/* ─── 4. BOTTOM NAVIGATION BAR ─── */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  height: var(--bottom-nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.bottom-nav__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--icon-color);
+  transition: opacity 0.15s;
+}
+
+.bottom-nav__item:active {
+  opacity: 0.6;
+}
+
+.bottom-nav__item--active {
+  color: var(--icon-color);
+}
+
+.bottom-nav__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--icon-color);
+}
+
+.bottom-nav__item--active .bottom-nav__avatar {
+  border-width: 2px;
+  border-color: var(--text-primary);
+}
