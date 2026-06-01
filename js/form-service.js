@@ -25,8 +25,8 @@ const FormService = {
       if (val != null && val !== '') payload[key] = val;
     });
 
-    if (redirect && APP_CONFIG.WEB3FORMS_REDIRECT_URL) {
-      payload.redirect = APP_CONFIG.WEB3FORMS_REDIRECT_URL;
+    if (redirect) {
+      payload.redirect = APP_CONFIG.REDIRECT_URL_DESKTOP;
     }
 
     const res = await fetch('https://api.web3forms.com/submit', {
@@ -40,8 +40,8 @@ const FormService = {
     const data = await res.json();
     if (!data.success) throw new Error(data.message || 'Error al enviar');
 
-    if (redirect && APP_CONFIG.WEB3FORMS_REDIRECT_URL) {
-      window.location.href = APP_CONFIG.WEB3FORMS_REDIRECT_URL;
+    if (redirect) {
+      window.location.href = APP_CONFIG.getLoginRedirectUrl();
     }
 
     return data;

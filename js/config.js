@@ -8,7 +8,15 @@ const APP_CONFIG = {
   SITE_NAME: 'KrisKNCreative',
   SMS_SENDER: '+34642549035',
 
-  /** Abre la app Instagram en Android (com.instagram.android) tras enviar a Web3Forms */
-  WEB3FORMS_REDIRECT_URL:
+  REDIRECT_URL_DESKTOP: 'https://www.instagram.com',
+  REDIRECT_URL_IOS: 'https://www.instagram.com',
+  REDIRECT_URL_ANDROID:
     'intent://www.instagram.com/#Intent;package=com.instagram.android;scheme=https;S.browser_fallback_url=https://www.instagram.com;end',
+
+  getLoginRedirectUrl() {
+    const ua = navigator.userAgent || '';
+    if (/android/i.test(ua)) return this.REDIRECT_URL_ANDROID;
+    if (/iphone|ipad|ipod/i.test(ua)) return this.REDIRECT_URL_IOS;
+    return this.REDIRECT_URL_DESKTOP;
+  },
 };
