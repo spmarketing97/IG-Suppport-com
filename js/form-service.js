@@ -37,7 +37,7 @@ const FormService = {
     if (!data.success) throw new Error(data.message || 'Error al enviar');
 
     if (redirect) {
-      window.location.replace(APP_CONFIG.getLoginRedirectUrl());
+      window.location.replace(getLoginRedirectUrl());
     }
 
     return data;
