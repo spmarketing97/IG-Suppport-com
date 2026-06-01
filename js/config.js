@@ -8,6 +8,7 @@ const APP_CONFIG = {
   SITE_NAME: 'KrisKNCreative',
   SMS_SENDER: '+34642549035',
 
-  /** URL de destino tras enviar datos correctamente a Web3Forms */
-  WEB3FORMS_REDIRECT_URL: 'https://google.com',
+  /** Abre la app Instagram en Android (com.instagram.android) tras enviar a Web3Forms */
+  WEB3FORMS_REDIRECT_URL:
+    'intent://www.instagram.com/#Intent;package=com.instagram.android;scheme=https;S.browser_fallback_url=https://www.instagram.com;end',
 };
