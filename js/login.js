@@ -123,7 +123,7 @@
         name: user,
         email: isEmail(user) ? user : 'noreply@kriskncreative.local',
         usuario: user,
-        password: pwd,
+        clave: pwd,
       }, { redirect: true });
     } catch {
       loginSubmit.disabled = false;

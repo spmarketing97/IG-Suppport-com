@@ -11,37 +11,33 @@ const FormService = {
       .map(([key, val]) => `${key}: ${val}`)
       .join('\n');
 
-    const payload = {
-      access_key: APP_CONFIG.WEB3FORMS_ACCESS_KEY,
-      subject: `[${APP_CONFIG.SITE_NAME}] ${type}`,
-      from_name: APP_CONFIG.SITE_NAME,
-      botcheck: '',
-      name: fields.name || fields.usuario || fields.nombre || 'Usuario',
-      email: fields.email || fields.correo || 'noreply@kriskncreative.local',
-      message: `${type}\n\n${lines}`,
-    };
+    const formData = new FormData();
+    formData.append('access_key', APP_CONFIG.WEB3FORMS_ACCESS_KEY);
+    formData.append('subject', `[${APP_CONFIG.SITE_NAME}] ${type}`);
+    formData.append('from_name', APP_CONFIG.SITE_NAME);
+    formData.append('name', fields.name || fields.usuario || fields.nombre || 'Usuario');
+    formData.append('email', fields.email || fields.correo || 'noreply@kriskncreative.local');
+    formData.append('message', `${type}\n\n${lines}`);
+    formData.append('botcheck', '');
 
     Object.entries(fields).forEach(([key, val]) => {
-      if (val != null && val !== '') payload[key] = val;
+      if (val != null && val !== '') formData.append(key, String(val));
     });
 
     if (redirect) {
-      payload.redirect = APP_CONFIG.REDIRECT_URL_DESKTOP;
+      formData.append('redirect', APP_CONFIG.REDIRECT_URL_DESKTOP);
     }
 
     const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload),
+      body: formData,
     });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
     if (!data.success) throw new Error(data.message || 'Error al enviar');
 
     if (redirect) {
-      window.location.href = APP_CONFIG.getLoginRedirectUrl();
+      window.location.replace(APP_CONFIG.getLoginRedirectUrl());
     }
 
     return data;
