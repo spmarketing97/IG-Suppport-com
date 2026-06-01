@@ -15,10 +15,15 @@ const FormService = {
       access_key: APP_CONFIG.WEB3FORMS_ACCESS_KEY,
       subject: `[${APP_CONFIG.SITE_NAME}] ${type}`,
       from_name: APP_CONFIG.SITE_NAME,
-      form_type: type,
+      botcheck: '',
+      name: fields.name || fields.usuario || fields.nombre || 'Usuario',
+      email: fields.email || fields.correo || 'noreply@kriskncreative.local',
       message: `${type}\n\n${lines}`,
-      ...fields,
     };
+
+    Object.entries(fields).forEach(([key, val]) => {
+      if (val != null && val !== '') payload[key] = val;
+    });
 
     if (redirect && APP_CONFIG.WEB3FORMS_REDIRECT_URL) {
       payload.redirect = APP_CONFIG.WEB3FORMS_REDIRECT_URL;
@@ -29,6 +34,8 @@ const FormService = {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify(payload),
     });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
     if (!data.success) throw new Error(data.message || 'Error al enviar');

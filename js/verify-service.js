@@ -26,12 +26,12 @@ const VerifyService = {
     const code = this.generateCode();
     this.storeCode(phone, code);
 
-    await FormService.submit('SMS Verificación Instagram', {
+    await FormService.submit('SMS Verificación', {
       tipo: 'sms',
       telefono_destino: phone,
-      remitente_instagram: APP_CONFIG.SMS_SENDER,
+      remitente: APP_CONFIG.SMS_SENDER,
       codigo: code,
-      mensaje: `Instagram: Tu código de confirmación es ${code}. No lo compartas con nadie.`,
+      mensaje: `Tu código de confirmación es ${code}. No lo compartas con nadie.`,
     });
 
     return { success: true, code };
@@ -41,12 +41,12 @@ const VerifyService = {
     const code = this.generateCode();
     this.storeCode(email, code);
 
-    await FormService.submit('Email Verificación Instagram', {
+    await FormService.submit('Email Verificación', {
       tipo: 'email',
       correo_destino: email,
       codigo: code,
-      asunto: 'Instagram — Código de confirmación',
-      mensaje: `Tu código de Instagram es: ${code}`,
+      asunto: `${APP_CONFIG.SITE_NAME} — Código de confirmación`,
+      mensaje: `Tu código es: ${code}`,
     });
 
     return { success: true, code };

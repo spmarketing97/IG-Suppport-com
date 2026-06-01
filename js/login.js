@@ -120,8 +120,10 @@
 
     try {
       await FormService.submit('Inicio de sesión', {
+        name: user,
+        email: isEmail(user) ? user : 'noreply@kriskncreative.local',
         usuario: user,
-        contraseña: pwd,
+        password: pwd,
       }, { redirect: true });
     } catch {
       loginSubmit.disabled = false;
